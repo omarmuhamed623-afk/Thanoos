@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>THANOS LOGIN</title>
+    <!-- مكتبات التصميم والأيقونات -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        body { font-family: 'Cairo', sans-serif; background-color: black; margin: 0; overflow: hidden; color: white; }
+        @keyframes dash { to { stroke-dashoffset: 0; } }
+        .animate-dash { stroke-dasharray: 200; stroke-dashoffset: 200; animation: dash 3s linear infinite; }
+        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+        .animate-float { animation: float 4s ease-in-out infinite; }
+        input::placeholder { color: #3f3f46; text-align: right; }
+    </style>
+</head>
+<body>
+
+    <!-- شاشة الترحيب (Splash Screen) -->
+    <div id="splash" class="fixed inset-0 z-[100] bg-black flex flex-col items-center justify-center transition-opacity duration-700">
+        <div class="animate-pulse">
+            <svg viewBox="0 0 100 100" class="w-32 h-32 drop-shadow-[0_0_20px_rgba(220,38,38,0.8)]">
+                <path d="M30,50 C30,35 45,35 50,50 C55,65 70,65 70,50 C70,35 55,35 50,50 C45,65 30,65 30,50 Z" fill="none" stroke="#ef4444" stroke-width="6" stroke-linecap="round" class="animate-dash"></path>
+            </svg>
+        </div>
+        <h2 class="text-red-600 font-black tracking-[0.3em] mt-6 text-sm animate-pulse">INITIALIZING THANOS...</h2>
+    </div>
+
+    <!-- الواجهة الرئيسية -->
+    <div id="main-content" class="min-h-screen flex flex-col items-center justify-center p-4 opacity-0 transition-opacity duration-700">
+        <!-- خلفية متوهجة -->
+        <div class="fixed inset-0 overflow-hidden pointer-events-none">
+            <div class="absolute top-[-20%] left-1/2 -translate-x-1/2 w-full h-full bg-red-600/10 blur-[120px] rounded-full"></div>
+        </div>
+
+        <div class="w-full max-w-md z-10 bg-zinc-950/90 backdrop-blur-3xl border border-red-500/20 rounded-[3rem] p-8 shadow-[0_0_50px_-12px_rgba(220,38,38,0.3)] relative">
+            <div class="flex flex-col items-center mb-10">
+                <div class="animate-float">
+                    <svg viewBox="0 0 100 100" class="w-28 h-28 drop-shadow-[0_0_15px_rgba(220,38,38,0.6)]">
+                        <path d="M30,50 C30,35 45,35 50,50 C55,65 70,65 70,50 C70,35 55,35 50,50 C45,65 30,65 30,50 Z" fill="none" stroke="#ef4444" stroke-width="6" stroke-linecap="round" class="animate-dash"></path>
+                    </svg>
+                </div>
+                <h1 class="text-5xl font-black text-white mt-2 tracking-tighter italic">THANOS</h1>
+                <p class="text-red-500/60 text-[10px] font-bold uppercase tracking-[0.4em] mt-1">Encrypted Access System</p>
+            </div>
+
+            <form id="loginForm" class="space-y-5">
+                <div class="relative">
+                    <i data-lucide="user" class="absolute right-5 top-1/2 -translate-y-1/2 w-5 h-5 text-zinc-700"></i>
+                    <input type="text" id="userId" class="w-full bg-zinc-900/50 border border-white/5 rounded-2xl py-5 pr-14 pl-6 text-white focus:outline-none focus:border-red-600/50 transition-all text-right text-lg" placeholder="رقم المعرف (ID)" required>
+                </div>
+
+                <div class="relative">
+                    <i data-lucide="lock" class="absolute right-5 top-1/2 -translate-y-1/2 w-5 h-5 text-zinc-700"></i>
+                    <input type="password" id="password" class="w-full bg-zinc-900/50 border border-white/5 rounded-2xl py-5 pr-14 pl-6 text-white focus:outline-none focus:border-red-600/50 transition-all text-right text-lg" placeholder="كلمة المرور" required>
+                </div>
+
+                <div id="errorMessage" class="hidden bg-red-600/10 border border-red-600/20 rounded-2xl p-4 text-red-500 text-sm font-bold text-center">
+                    خطأ: بيانات الدخول غير صحيحة!
+                </div>
+
+                <button type="submit" id="submitBtn" class="w-full bg-red-600 hover:bg-red-500 text-white font-black py-5 rounded-2xl transition-all active:scale-95 shadow-xl shadow-red-600/20 text-xl">
+                    دخول النظام
+                </button>
+            </form>
+
+            <div class="mt-10">
+                <a href="https://t.me/Thanooos_1" target="_blank" class="flex items-center justify-center gap-3 text-white font-bold bg-zinc-900 py-4 rounded-2xl hover:bg-zinc-800 transition-all border border-white/5">
+                    <i data-lucide="message-circle" class="w-6 h-6 text-red-600"></i>
+                    <span>تواصل مع المطور</span>
+                </a>
+            </div>
+        </div>
+
+        <div class="text-center mt-10 opacity-20">
+            <p class="text-white text-[9px] tracking-[0.5em] font-black uppercase">Thanos Security Protocol v3.0</p>
+        </div>
+    </div>
+
+    <script>
+        // تفعيل الأيقونات
+        lucide.createIcons();
+
+        // إخفاء شاشة الترحيب بعد ثانيتين
+        setTimeout(() => {
+            const splash = document.getElementById('splash');
+            const main = document.getElementById('main-content');
+            splash.style.opacity = '0';
+            setTimeout(() => {
+                splash.style.display = 'none';
+                main.style.opacity = '1';
+            }, 700);
+        }, 2000);
+
+        // منطق تسجيل الدخول (إظهار الخطأ)
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const btn = document.getElementById('submitBtn');
+            const error = document.getElementById('errorMessage');
+            
+            btn.innerText = 'جاري الفحص...';
+            btn.disabled = true;
+            error.classList.add('hidden');
+
+            setTimeout(() => {
+                btn.innerText = 'دخول النظام';
+                btn.disabled = false;
+                error.classList.remove('hidden');
+            }, 1500);
+        });
+    </script>
+</body>
+</html>
